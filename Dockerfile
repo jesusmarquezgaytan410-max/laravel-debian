@@ -5,32 +5,22 @@ WORKDIR /var/www
 # Instalar dependencias necesarias
 RUN apt-get update && apt-get install -y \
     git \
-    curl \
     unzip \
     zip \
     libzip-dev \
     libpq-dev \
-    libonig-dev \
-    libxml2-dev \
-    && docker-php-ext-install \
-    pdo \
-    pdo_pgsql \
-    mbstring \
-    zip \
-    exif \
-    pcntl \
-    bcmath
+    && docker-php-ext-install pdo pdo_pgsql zip
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copiar proyecto
+# Copiar el proyecto
 COPY . .
 
-# Instalar dependencias Laravel
+# Instalar dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Puerto usado por Render
+# Puerto que usará Render
 EXPOSE 10000
 
 # Iniciar Laravel
