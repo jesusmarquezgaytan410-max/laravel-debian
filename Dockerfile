@@ -16,15 +16,12 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-RUN php artisan config:clear \
-    && php artisan cache:clear \
-    && php artisan route:clear \
-    && php artisan view:clear
-
 RUN rm -f bootstrap/cache/*.php
 
 RUN php -m
 
 EXPOSE 10000
 
-CMD php -d display_errors=1 -d display_startup_errors=1 -S 0.0.0.0:$PORT -t public
+CMD php artisan config:clear && \
+php artisan cache:clear && \
+php -S 0.0.0.0:$PORT -t public
