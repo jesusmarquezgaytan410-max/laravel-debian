@@ -18,8 +18,6 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
 
 RUN rm -f bootstrap/cache/*.php
 
-RUN php -m
-
 EXPOSE 10000
 
 CMD php artisan config:clear && \
