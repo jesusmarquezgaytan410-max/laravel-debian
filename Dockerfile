@@ -15,11 +15,17 @@ RUN composer install --no-dev --optimize-autoloader
 RUN mkdir -p /var/www/database \
     && touch /var/www/database/database.sqlite
 
+# ✅ Crear carpetas necesarias de storage
+RUN mkdir -p storage/framework/views \
+    && mkdir -p storage/framework/cache/data \
+    && mkdir -p storage/framework/sessions \
+    && mkdir -p storage/logs \
+    && mkdir -p bootstrap/cache
+
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 10000
-
 CMD php artisan config:clear && \
     php artisan route:clear && \
     php artisan view:clear && \
