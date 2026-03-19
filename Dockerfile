@@ -18,8 +18,8 @@ RUN mkdir -p /var/www/database \
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-RUN php artisan config:clear \
-    && php artisan cache:clear \
+RUN CACHE_DRIVER=file php artisan config:clear \
+    && CACHE_DRIVER=file php artisan cache:clear \
     && php artisan route:clear \
     && php artisan view:clear
 
