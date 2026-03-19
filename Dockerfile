@@ -18,10 +18,9 @@ RUN mkdir -p /var/www/database \
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-RUN CACHE_DRIVER=file php artisan config:clear \
-    && CACHE_DRIVER=file php artisan cache:clear \
-    && php artisan route:clear \
-    && php artisan view:clear
-
 EXPOSE 10000
-CMD php artisan serve --host=0.0.0.0 --port=10000
+CMD php artisan config:clear && \
+    php artisan cache:clear && \
+    php artisan route:clear && \
+    php artisan view:clear && \
+    php artisan serve --host=0.0.0.0 --port=10000
